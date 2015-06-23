@@ -26,7 +26,13 @@ class ConnectApp
     if opt.livereload
       tinyLr.Server::error = ->
       lr = tinyLr()
-      lr.listen opt.livereload.port
+      lr.listen opt.livereload.port, ->
+        if isNaN(opt.livereload.port)
+          if fs.existsSync(opt.livereload.port)
+            fs.chmodSync opt.livereload.port, '0777'
+          else
+            return _this.log('LiveReload could not start')
+        return
       @log "LiveReload started on port #{opt.livereload.port}"
 
   middleware: ->
