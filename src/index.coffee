@@ -92,8 +92,9 @@ class ConnectApp
     middleware = if opt.middleware then opt.middleware.call(this, connect, opt) else []
     if opt.livereload
       opt.livereload = {}  if typeof opt.livereload is "boolean"
-      opt.livereload.port = 35729  unless opt.livereload.port
-      middleware.push liveReload(port: opt.livereload.port)
+      opt.livereload.proxyport = opt.livereload.port or 35729 unless opt.livereload.proxyport
+      
+      middleware.push liveReload(port: opt.livereload.proxyport)
     if typeof opt.root == "object"
       opt.root.forEach (path) ->
         middleware.push connect.static(path)
