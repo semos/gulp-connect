@@ -106,6 +106,27 @@ gulp.task('default', ['connectDist', 'connectDev', 'watch']);
 
 ```
 
+
+#### Unix Sockets + Proxy
+
+```js
+var gulp = require('gulp'),
+  connect = require('gulp-connect');
+
+gulp.task('connectDev', function () {
+  connect.server({
+    root: ['app', 'tmp'],
+    port: '/tmp/devserver.sock',
+    livereload: {
+      port: '/tmp/devserver.lr.sock',
+      proxyport: 35729
+    }
+  });
+});
+
+
+```
+
 ## API
 
 #### options.root
