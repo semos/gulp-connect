@@ -24,7 +24,8 @@
     }
   ],
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "prepublish": "coffee -o . -bc src/"
   },
   "engines": {
     "node": ">=0.10.0"
