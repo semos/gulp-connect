@@ -24,6 +24,9 @@ class ConnectApp
   server: ->
     app = connect()
     @middleware().forEach (middleware) ->
+	  if typeof (middleware) is "object"
+        app.use middleware[0], middleware[1]
+      else
       app.use middleware
     if opt.https?
       server = https.createServer
@@ -39,8 +42,7 @@ class ConnectApp
       if err
         @log "Error on starting server: #{err}"
       else
-        @log "Server started http://#{opt.host}:#{opt.port}"
-        
+        @log "Server started http#{if opt.https? then 's' else ''}://#{opt.host}:#{opt.port}"
         stoped = false;
         sockets = [];
         
